@@ -37,10 +37,10 @@ export default function LandingPage() {
   };
 
   return (
-    <div style={styles.landingWrapper}>
+    <div style={styles.landingWrapper} className="landing-wrapper">
       {/* ── Top Navbar ────────────────────────────────────────────── */}
-      <header style={styles.navbar}>
-        <div style={styles.navContainer}>
+      <header style={styles.navbar} className="landing-navbar">
+        <div style={styles.navContainer} className="landing-nav-container">
           <div style={styles.brandLogo} onClick={() => navigate('/')}>
             <div style={styles.logoBadge}>
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ transform: 'rotate(15deg)' }}>
@@ -51,14 +51,14 @@ export default function LandingPage() {
             <span style={styles.brandTitle}>SMRITHI</span>
           </div>
 
-          <nav style={styles.navLinks}>
+          <nav style={styles.navLinks} className="landing-nav-links">
             <a href="#features" style={styles.navItem}>Features</a>
             <a href="#telehealth" style={styles.navItem}>AI Caregiver</a>
             <a href="#testimonials" style={styles.navItem}>Testimonials</a>
             <a href="#booking" style={styles.navItem}>Consultation</a>
           </nav>
 
-          <div style={styles.navActions}>
+          <div style={styles.navActions} className="landing-nav-actions">
             <button style={styles.loginBtn} onClick={() => navigate('/login-signup')}>
               Log In
             </button>
@@ -70,11 +70,11 @@ export default function LandingPage() {
       </header>
 
       {/* ── Hero Section (Editorial Reference Style) ──────────────── */}
-      <section style={styles.heroSection}>
-        <div style={styles.heroContainer}>
+      <section style={styles.heroSection} className="landing-hero-section">
+        <div style={styles.heroContainer} className="landing-hero-container">
           {/* Left Column: Text Content */}
-          <div style={styles.heroTextCol}>
-            <h1 style={styles.heroHeading}>
+          <div style={styles.heroTextCol} className="landing-hero-text-col">
+            <h1 style={styles.heroHeading} className="landing-hero-heading">
               Cognitive Health & Memory Care
             </h1>
 
@@ -90,7 +90,7 @@ export default function LandingPage() {
           </div>
 
           {/* Right Column: High-Res Photo of Caregiver Holding Tablet */}
-          <div style={styles.heroVisualCol}>
+          <div style={styles.heroVisualCol} className="landing-hero-visual-col">
             <div style={styles.heroImageCard}>
               <img
                 src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&q=80&w=900"
@@ -103,10 +103,10 @@ export default function LandingPage() {
       </section>
 
       {/* ── Social Proof / Trusted Partners Banner ─────────────────── */}
-      <section style={styles.partnersSection}>
-        <div style={styles.partnersContainer}>
+      <section style={styles.partnersSection} className="landing-partners-section">
+        <div style={styles.partnersContainer} className="landing-partners-container">
           <p style={styles.partnersTitle}>TRUSTED BY LEADING HEALTH & MEMORY FOUNDATIONS NATIONWIDE</p>
-          <div style={styles.logoRow}>
+          <div style={styles.logoRow} className="landing-logo-row">
             <span style={styles.partnerLogo}>SIH 2026</span>
             <span style={styles.partnerLogo}>AIIMS Care</span>
             <span style={styles.partnerLogo}>NeuroHealth</span>
@@ -125,7 +125,7 @@ export default function LandingPage() {
           <p style={styles.sectionSub}>Designed with warm green aesthetics, clear typography, and gentle interaction.</p>
         </div>
 
-        <div style={styles.featureGrid}>
+        <div style={styles.featureGrid} className="landing-feature-grid">
           {/* Card 1: Cognitive Games */}
           <div style={styles.featureCard}>
             <div style={styles.featureImgWrapper}>
