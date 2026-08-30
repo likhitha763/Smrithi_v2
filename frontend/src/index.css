@@ -929,14 +929,14 @@ button {
     gap: 20px !important;
   }
 
-  .landing-partners-container {
-    padding: 24px 16px !important;
+  /* Landing Page Trust Section Responsiveness */
+  .landing-trust-section {
+    padding: 56px 20px !important;
   }
 
-  .landing-logo-row {
-    flex-wrap: wrap !important;
-    gap: 16px !important;
-    justify-content: center !important;
+  .landing-trust-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 20px !important;
   }
 
   /* Caregiver Dashboard */
@@ -980,8 +980,26 @@ button {
     padding: 12px 14px !important;
   }
 
+  .landing-logo-badge {
+    width: 40px !important;
+    height: 40px !important;
+  }
+
+  .landing-brand-title {
+    font-size: 1.35rem !important;
+  }
+
   .landing-hero-heading {
     font-size: 1.75rem !important;
+  }
+
+  .landing-trust-section {
+    padding: 44px 16px !important;
+  }
+
+  .landing-trust-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
   }
 
   .cg-kpi-grid {
@@ -992,6 +1010,18 @@ button {
     padding: 16px !important;
   }
 }
+
+/* ── Trust Cards Micro-Interactions ────────────────────────────── */
+.trust-card {
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease !important;
+}
+
+.trust-card:hover {
+  transform: translateY(-4px) !important;
+  box-shadow: 0 14px 32px rgba(30, 101, 53, 0.08) !important;
+  border-color: #b5ddb9 !important;
+}
+
 
 
 

@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Brain,
+  Bot,
+  Users,
+  Smile,
   Heart,
   ShieldCheck,
   Activity,
@@ -41,14 +44,14 @@ export default function LandingPage() {
       {/* ── Top Navbar ────────────────────────────────────────────── */}
       <header style={styles.navbar} className="landing-navbar">
         <div style={styles.navContainer} className="landing-nav-container">
-          <div style={styles.brandLogo} onClick={() => navigate('/')}>
-            <div style={styles.logoBadge}>
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ transform: 'rotate(15deg)' }}>
+          <div style={styles.brandLogo} className="landing-brand-logo" onClick={() => navigate('/')}>
+            <div style={styles.logoBadge} className="landing-logo-badge">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ transform: 'rotate(15deg)' }}>
                 <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 3.5 1 9.8a7 7 0 0 1-9 8.2Z" />
                 <path d="M9 22v-4" />
               </svg>
             </div>
-            <span style={styles.brandTitle}>SMRITHI</span>
+            <span style={styles.brandTitle} className="landing-brand-title">SMRITHI</span>
           </div>
 
           <nav style={styles.navLinks} className="landing-nav-links">
@@ -63,7 +66,7 @@ export default function LandingPage() {
               Log In
             </button>
             <button style={styles.getStartedBtn} onClick={() => navigate('/login')}>
-              Get Started / Login
+              Caregiver Portal
             </button>
           </div>
         </div>
@@ -102,17 +105,71 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ── Social Proof / Trusted Partners Banner ─────────────────── */}
-      <section style={styles.partnersSection} className="landing-partners-section">
-        <div style={styles.partnersContainer} className="landing-partners-container">
-          <p style={styles.partnersTitle}>TRUSTED BY LEADING HEALTH & MEMORY FOUNDATIONS NATIONWIDE</p>
-          <div style={styles.logoRow} className="landing-logo-row">
-            <span style={styles.partnerLogo}>SIH 2026</span>
-            <span style={styles.partnerLogo}>AIIMS Care</span>
-            <span style={styles.partnerLogo}>NeuroHealth</span>
-            <span style={styles.partnerLogo}>MemoryCare Alliance</span>
-            <span style={styles.partnerLogo}>Google Startups</span>
-            <span style={styles.partnerLogo}>HealthGuard</span>
+      {/* ── Landing Page Value & Trust Section ────────────────────── */}
+      <section style={styles.trustSection} className="landing-trust-section">
+        <div style={styles.trustBgDecorLeft} className="trust-bg-decor-left">
+          <svg width="220" height="220" viewBox="0 0 200 200" fill="none" opacity="0.18">
+            <path d="M100 20C50 20 20 50 20 100C20 150 50 180 100 180C150 180 180 150 180 100C180 50 150 20 100 20ZM100 160C66.86 160 40 133.14 40 100C40 66.86 66.86 40 100 40C133.14 40 160 66.86 160 100C160 133.14 133.14 160 100 160Z" fill="var(--primary-green)" />
+          </svg>
+        </div>
+        <div style={styles.trustBgDecorRight} className="trust-bg-decor-right">
+          <svg width="180" height="180" viewBox="0 0 200 200" fill="none" opacity="0.15">
+            <path d="M100 0C44.77 0 0 44.77 0 100C0 155.23 44.77 200 100 200C155.23 200 200 155.23 200 100C200 44.77 155.23 0 100 0ZM100 150C72.39 150 50 127.61 50 100C50 72.39 72.39 50 100 50C127.61 50 150 72.39 150 100C150 127.61 127.61 150 100 150Z" fill="var(--primary-green)" />
+          </svg>
+        </div>
+
+        <div style={styles.trustContainer} className="landing-trust-container">
+          <div style={styles.trustHeader} className="landing-trust-header">
+            <h2 style={styles.trustTitle}>Built for Better Cognitive Care</h2>
+            <p style={styles.trustSubtitle}>
+              Smrithi brings together gentle cognitive activities, memory support, AI companionship, and caregiver assistance in one simple experience.
+            </p>
+          </div>
+
+          <div style={styles.trustGrid} className="landing-trust-grid">
+            {/* Card 1: Cognitive Wellness */}
+            <div style={styles.trustCard} className="trust-card">
+              <div style={styles.trustIconBox}>
+                <Brain size={28} color="var(--primary-green)" />
+              </div>
+              <h3 style={styles.trustCardTitle}>Cognitive Wellness</h3>
+              <p style={styles.trustCardText}>
+                Engaging activities designed to support memory, attention and daily cognitive practice.
+              </p>
+            </div>
+
+            {/* Card 2: AI Companion */}
+            <div style={styles.trustCard} className="trust-card">
+              <div style={styles.trustIconBox}>
+                <Bot size={28} color="var(--primary-green)" />
+              </div>
+              <h3 style={styles.trustCardTitle}>AI Companion</h3>
+              <p style={styles.trustCardText}>
+                A gentle conversational companion that makes everyday interaction easier and more engaging.
+              </p>
+            </div>
+
+            {/* Card 3: Family & Caregiver Support */}
+            <div style={styles.trustCard} className="trust-card">
+              <div style={styles.trustIconBox}>
+                <Users size={28} color="var(--primary-green)" />
+              </div>
+              <h3 style={styles.trustCardTitle}>Family & Caregiver Support</h3>
+              <p style={styles.trustCardText}>
+                Helps caregivers stay connected with routines, reminders and meaningful progress.
+              </p>
+            </div>
+
+            {/* Card 4: Simple for Seniors */}
+            <div style={styles.trustCard} className="trust-card">
+              <div style={styles.trustIconBox}>
+                <Smile size={28} color="var(--primary-green)" />
+              </div>
+              <h3 style={styles.trustCardTitle}>Simple for Seniors</h3>
+              <p style={styles.trustCardText}>
+                Large controls, clear language and calm visuals designed with older adults in mind.
+              </p>
+            </div>
           </div>
         </div>
       </section>
@@ -433,24 +490,28 @@ const styles = {
   brandLogo: {
     display: 'flex',
     alignItems: 'center',
-    gap: '12px',
+    gap: '14px',
     cursor: 'pointer',
+    userSelect: 'none',
   },
   logoBadge: {
-    width: '38px',
-    height: '38px',
-    borderRadius: '10px',
+    width: '46px',
+    height: '46px',
+    borderRadius: '12px',
     backgroundColor: 'var(--primary-green)',
     color: 'white',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    boxShadow: '0 4px 12px rgba(30, 101, 53, 0.18)',
+    flexShrink: 0,
   },
   brandTitle: {
-    fontSize: '1.45rem',
+    fontSize: '1.65rem',
     fontWeight: '800',
     color: 'var(--primary-green)',
-    letterSpacing: '0.8px',
+    letterSpacing: '0.5px',
+    lineHeight: '1',
   },
   navLinks: {
     display: 'flex',
@@ -595,35 +656,89 @@ const styles = {
     alignItems: 'center',
     gap: '12px',
   },
-  partnersSection: {
-    backgroundColor: 'var(--sidebar-bg)',
-    padding: '32px 40px',
+  trustSection: {
+    backgroundColor: '#FAF9F5',
+    padding: '80px 40px',
+    borderTop: '1px solid var(--border-color)',
     borderBottom: '1px solid var(--border-color)',
+    position: 'relative',
+    overflow: 'hidden',
   },
-  partnersContainer: {
+  trustBgDecorLeft: {
+    position: 'absolute',
+    left: '-60px',
+    top: '-40px',
+    pointerEvents: 'none',
+  },
+  trustBgDecorRight: {
+    position: 'absolute',
+    right: '-40px',
+    bottom: '-50px',
+    pointerEvents: 'none',
+  },
+  trustContainer: {
     maxWidth: '1320px',
     margin: '0 auto',
+    position: 'relative',
+    zIndex: 2,
+  },
+  trustHeader: {
     textAlign: 'center',
+    maxWidth: '720px',
+    margin: '0 auto 48px auto',
   },
-  partnersTitle: {
-    fontSize: '0.75rem',
+  trustTitle: {
+    fontSize: '2.25rem',
     fontWeight: '800',
-    letterSpacing: '1.2px',
-    color: 'var(--text-muted)',
-    marginBottom: '20px',
+    color: 'var(--text-main)',
+    letterSpacing: '-0.5px',
+    marginBottom: '14px',
+    lineHeight: '1.2',
   },
-  logoRow: {
-    display: 'flex',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    flexWrap: 'wrap',
+  trustSubtitle: {
+    fontSize: '1.05rem',
+    color: 'var(--text-muted)',
+    lineHeight: '1.6',
+    fontWeight: '500',
+  },
+  trustGrid: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(4, 1fr)',
     gap: '24px',
   },
-  partnerLogo: {
-    fontSize: '1.15rem',
-    fontWeight: '800',
-    color: 'var(--primary-green)',
-    opacity: 0.85,
+  trustCard: {
+    backgroundColor: '#ffffff',
+    border: '1px solid var(--border-color)',
+    borderRadius: '24px',
+    padding: '32px 26px',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    boxShadow: '0 8px 24px rgba(30, 101, 53, 0.04)',
+  },
+  trustIconBox: {
+    width: '56px',
+    height: '56px',
+    borderRadius: '16px',
+    backgroundColor: 'var(--secondary-green)',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: '20px',
+    flexShrink: 0,
+  },
+  trustCardTitle: {
+    fontSize: '1.2rem',
+    fontWeight: '700',
+    color: 'var(--text-main)',
+    marginBottom: '10px',
+    lineHeight: '1.3',
+  },
+  trustCardText: {
+    fontSize: '0.95rem',
+    color: 'var(--text-muted)',
+    lineHeight: '1.55',
+    fontWeight: '500',
   },
   sectionPadding: {
     padding: '80px 40px',
