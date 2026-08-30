@@ -880,9 +880,19 @@ button {
   white-space: nowrap;
 }
 
-/* ── Mobile Responsiveness Overrides (Prevent Horizontal Scroll) ──────── */
-@media (max-width: 992px) {
-  /* Landing Page */
+/* ═══════════════════════════════════════════════════════════════
+   LANDING PAGE — COMPREHENSIVE RESPONSIVE POLISH
+   Target viewports: 320, 360, 375, 390, 412, 768px
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Tablet (768px) ─────────────────────────────────────────────
+   Navbar: logo + actions only (no nav links already handled above)
+   Hero: single column, comfortable spacing
+   Sections: reduced padding but still generous
+   ──────────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+
+  /* ── NAVBAR ── */
   .landing-wrapper {
     width: 100% !important;
     max-width: 100vw !important;
@@ -890,38 +900,11 @@ button {
   }
 
   .landing-navbar {
-    padding: 14px 20px !important;
-  }
-
-  .landing-nav-container {
-    width: 100% !important;
-    max-width: 100% !important;
+    padding: 12px 20px !important;
   }
 
   .landing-nav-links {
     display: none !important;
-  }
-
-  .landing-hero-section {
-    padding: 32px 16px !important;
-  }
-
-  .landing-hero-container {
-    flex-direction: column !important;
-    gap: 32px !important;
-    padding: 0 !important;
-    text-align: center !important;
-  }
-
-  .landing-hero-text-col, .landing-hero-visual-col {
-    width: 100% !important;
-    max-width: 100% !important;
-    align-items: center !important;
-  }
-
-  .landing-hero-heading {
-    font-size: 2.1rem !important;
-    line-height: 1.25 !important;
   }
 
   .landing-feature-grid {
@@ -929,7 +912,6 @@ button {
     gap: 20px !important;
   }
 
-  /* Landing Page Trust Section Responsiveness */
   .landing-trust-section {
     padding: 56px 20px !important;
   }
@@ -939,6 +921,303 @@ button {
     gap: 20px !important;
   }
 
+
+  .landing-nav-container {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    gap: 12px !important;
+    flex-wrap: nowrap !important;
+  }
+
+  .landing-brand-logo {
+    flex-shrink: 0 !important;
+    gap: 10px !important;
+  }
+
+  /* Nav actions: keep login + portal on same row at tablet */
+  .landing-nav-actions {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    flex-shrink: 0 !important;
+  }
+
+  .landing-login-btn {
+    font-size: 0.875rem !important;
+    padding: 9px 16px !important;
+    white-space: nowrap !important;
+  }
+
+  .landing-get-started-btn {
+    font-size: 0.875rem !important;
+    padding: 9px 14px !important;
+    white-space: nowrap !important;
+  }
+
+  /* ── HERO ── */
+  .landing-hero-section {
+    padding: 40px 24px 0 24px !important;
+  }
+
+  .landing-hero-container {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 32px !important;
+    text-align: center !important;
+    align-items: center !important;
+  }
+
+  .landing-hero-text-col {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    padding-bottom: 0 !important;
+    width: 100% !important;
+  }
+
+  .landing-hero-heading {
+    font-size: 2.4rem !important;
+    line-height: 1.18 !important;
+    letter-spacing: -0.5px !important;
+    margin-bottom: 16px !important;
+  }
+
+  .landing-hero-subtext {
+    font-size: 1.05rem !important;
+    line-height: 1.65 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    margin-bottom: 28px !important;
+  }
+
+  .landing-hero-visual-col {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+}
+
+/* ── Mobile (≤ 480px) ──────────────────────────────────────────
+   Navbar: "Log In" text only, "Portal" abbreviated or stacked
+   Hero: large but comfortable heading, full-width paragraph
+   Sections: tight but intentional spacing
+   ──────────────────────────────────────────────────────────────── */
+@media (max-width: 480px) {
+
+  /* ── NAVBAR ── */
+  .landing-navbar {
+    padding: 10px 16px !important;
+  }
+
+  .landing-logo-badge {
+    width: 38px !important;
+    height: 38px !important;
+    border-radius: 10px !important;
+  }
+
+  .landing-brand-logo {
+    gap: 8px !important;
+  }
+
+  .landing-brand-title {
+    font-size: 1.3rem !important;
+    letter-spacing: 0 !important;
+  }
+
+  /* On small phones, stack the two buttons or reduce them significantly */
+  .landing-nav-actions {
+    gap: 6px !important;
+  }
+
+  .landing-login-btn {
+    font-size: 0.825rem !important;
+    padding: 8px 12px !important;
+    border-radius: 9999px !important;
+    min-height: 36px !important;
+  }
+
+  .landing-get-started-btn {
+    font-size: 0.825rem !important;
+    padding: 8px 12px !important;
+    border-radius: 9999px !important;
+    min-height: 36px !important;
+  }
+
+  /* ── HERO ── */
+  .landing-hero-section {
+    padding: 32px 20px 0 20px !important;
+  }
+
+  .landing-hero-heading {
+    font-size: 2rem !important;
+    line-height: 1.2 !important;
+    letter-spacing: -0.3px !important;
+    margin-bottom: 14px !important;
+  }
+
+  .landing-hero-subtext {
+    font-size: 1rem !important;
+    line-height: 1.65 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    margin-bottom: 24px !important;
+    letter-spacing: 0 !important;
+  }
+
+  /* CTA button: full-width on mobile for comfort */
+  .landing-primary-cta {
+    width: 100% !important;
+    justify-content: center !important;
+    font-size: 1rem !important;
+    padding: 15px 24px !important;
+  }
+
+  /* ── SECTIONS general ── */
+  .landing-section-padding {
+    padding: 48px 20px !important;
+  }
+
+  .landing-section-title {
+    font-size: 1.75rem !important;
+  }
+
+  /* ── DARK SECTION (Telehealth) ── */
+  .landing-dark-section {
+    margin: 0 12px !important;
+    padding: 48px 20px !important;
+    border-radius: 24px !important;
+  }
+
+  .landing-dark-container {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 32px !important;
+  }
+
+  .landing-dark-title {
+    font-size: 1.75rem !important;
+    line-height: 1.25 !important;
+  }
+
+  /* ── BOOKING SECTION ── */
+  .landing-booking-container {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 24px !important;
+  }
+
+  .landing-booking-img-col {
+    display: none !important;  /* hide image on smallest screens, form is primary */
+  }
+
+  .landing-booking-form-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* ── TESTIMONIALS ── */
+  .landing-testimonial-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 16px !important;
+  }
+
+  /* ── TRUST SECTION ── */
+  .landing-trust-header {
+    margin-bottom: 32px !important;
+  }
+
+  .landing-trust-title {
+    font-size: 1.75rem !important;
+    letter-spacing: -0.3px !important;
+  }
+
+  .landing-trust-subtitle {
+    font-size: 0.95rem !important;
+  }
+
+  /* ── FOOTER ── */
+  .landing-footer {
+    padding: 48px 20px 24px 20px !important;
+    margin-top: 24px !important;
+  }
+
+  .landing-footer-container {
+    flex-direction: column !important;
+    gap: 24px !important;
+    margin-bottom: 24px !important;
+  }
+
+  .landing-footer-links-grid {
+    gap: 32px !important;
+  }
+
+  .landing-copyright-row {
+    flex-direction: column !important;
+    gap: 6px !important;
+    text-align: center !important;
+    font-size: 0.8rem !important;
+  }
+}
+
+/* ── Small mobile (≤ 360px) ────────────────────────────────────
+   Most aggressive adjustments for very small screens
+   ──────────────────────────────────────────────────────────────── */
+@media (max-width: 360px) {
+
+  .landing-navbar {
+    padding: 10px 12px !important;
+  }
+
+  .landing-logo-badge {
+    width: 34px !important;
+    height: 34px !important;
+    border-radius: 8px !important;
+  }
+
+  .landing-brand-title {
+    font-size: 1.2rem !important;
+  }
+
+  .landing-brand-logo {
+    gap: 6px !important;
+  }
+
+  /* On 320px, show only "Login" as a ghost link and one primary button */
+  .landing-login-btn {
+    display: none !important;
+  }
+
+  .landing-get-started-btn {
+    font-size: 0.8rem !important;
+    padding: 8px 14px !important;
+  }
+
+  .landing-hero-section {
+    padding: 24px 16px 0 16px !important;
+  }
+
+  .landing-hero-heading {
+    font-size: 1.75rem !important;
+    letter-spacing: -0.2px !important;
+  }
+
+  .landing-hero-subtext {
+    font-size: 0.975rem !important;
+    line-height: 1.6 !important;
+  }
+
+  .landing-dark-section {
+    margin: 0 8px !important;
+    padding: 40px 16px !important;
+    border-radius: 20px !important;
+  }
+
+  .landing-dark-title {
+    font-size: 1.5rem !important;
+  }
+}
+
+@media (max-width: 992px) {
   /* Caregiver Dashboard */
   .cg-dashboard {
     width: 100% !important;
@@ -976,32 +1255,6 @@ button {
 }
 
 @media (max-width: 576px) {
-  .landing-navbar {
-    padding: 12px 14px !important;
-  }
-
-  .landing-logo-badge {
-    width: 40px !important;
-    height: 40px !important;
-  }
-
-  .landing-brand-title {
-    font-size: 1.35rem !important;
-  }
-
-  .landing-hero-heading {
-    font-size: 1.75rem !important;
-  }
-
-  .landing-trust-section {
-    padding: 44px 16px !important;
-  }
-
-  .landing-trust-grid {
-    grid-template-columns: 1fr !important;
-    gap: 16px !important;
-  }
-
   .cg-kpi-grid {
     grid-template-columns: 1fr !important;
   }
@@ -1021,7 +1274,3 @@ button {
   box-shadow: 0 14px 32px rgba(30, 101, 53, 0.08) !important;
   border-color: #b5ddb9 !important;
 }
-
-
-
-

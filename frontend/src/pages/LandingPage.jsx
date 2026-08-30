@@ -62,10 +62,10 @@ export default function LandingPage() {
           </nav>
 
           <div style={styles.navActions} className="landing-nav-actions">
-            <button style={styles.loginBtn} onClick={() => navigate('/login')}>
+            <button style={styles.loginBtn} className="landing-login-btn" onClick={() => navigate('/login')}>
               Log In
             </button>
-            <button style={styles.getStartedBtn} onClick={() => navigate('/login')}>
+            <button style={styles.getStartedBtn} className="landing-get-started-btn" onClick={() => navigate('/login')}>
               Caregiver Portal
             </button>
           </div>
@@ -81,12 +81,12 @@ export default function LandingPage() {
               Cognitive Health & Memory Care
             </h1>
 
-            <p style={styles.heroSubtext}>
+            <p style={styles.heroSubtext} className="landing-hero-subtext">
               Gentle AI caregiving, daily memory tracking, and real-time telehealth monitoring for seniors and family caregivers.
             </p>
 
             <div style={styles.heroBtnGroup}>
-              <button style={styles.primaryCta} onClick={() => navigate('/login')}>
+              <button style={styles.primaryCta} className="landing-primary-cta" onClick={() => navigate('/login')}>
                 Get Started / Login <ArrowRight size={18} />
               </button>
             </div>
@@ -120,8 +120,8 @@ export default function LandingPage() {
 
         <div style={styles.trustContainer} className="landing-trust-container">
           <div style={styles.trustHeader} className="landing-trust-header">
-            <h2 style={styles.trustTitle}>Built for Better Cognitive Care</h2>
-            <p style={styles.trustSubtitle}>
+            <h2 style={styles.trustTitle} className="landing-trust-title">Built for Better Cognitive Care</h2>
+            <p style={styles.trustSubtitle} className="landing-trust-subtitle">
               Smrithi brings together gentle cognitive activities, memory support, AI companionship, and caregiver assistance in one simple experience.
             </p>
           </div>
@@ -175,10 +175,10 @@ export default function LandingPage() {
       </section>
 
       {/* ── 3-Column Features Section ────────────────────────────── */}
-      <section id="features" style={styles.sectionPadding}>
+      <section id="features" style={styles.sectionPadding} className="landing-section-padding">
         <div style={styles.sectionHeaderContainer}>
           <span style={styles.sectionBadge}>CORE CAPABILITIES</span>
-          <h2 style={styles.sectionTitle}>Everything you need for cognitive wellness</h2>
+          <h2 style={styles.sectionTitle} className="landing-section-title">Everything you need for cognitive wellness</h2>
           <p style={styles.sectionSub}>Designed with warm green aesthetics, clear typography, and gentle interaction.</p>
         </div>
 
@@ -238,13 +238,13 @@ export default function LandingPage() {
       </section>
 
       {/* ── AI Telehealth Chatbot Showcase (Dark Forest Green Container) ─── */}
-      <section id="telehealth" style={styles.darkSection}>
-        <div style={styles.darkContainer}>
+      <section id="telehealth" style={styles.darkSection} className="landing-dark-section">
+        <div style={styles.darkContainer} className="landing-dark-container">
           <div style={styles.darkTextCol}>
             <div style={styles.darkBadge}>
               <Sparkles size={14} color="#d4e8d4" /> 24/7 AI TELEHEALTH COMPANION
             </div>
-            <h2 style={styles.darkTitle}>Your Intelligent Telehealth AI Assistant</h2>
+            <h2 style={styles.darkTitle} className="landing-dark-title">Your Intelligent Telehealth AI Assistant</h2>
             <p style={styles.darkSub}>
               Experience instant health queries, cognitive check-ins, and automated daily care reporting powered by specialized healthcare AI models.
             </p>
@@ -285,13 +285,13 @@ export default function LandingPage() {
       </section>
 
       {/* ── Testimonials Section ─────────────────────────────────── */}
-      <section id="testimonials" style={styles.sectionPadding}>
+      <section id="testimonials" style={styles.sectionPadding} className="landing-section-padding">
         <div style={styles.sectionHeaderContainer}>
           <span style={styles.sectionBadge}>PATIENT & CAREGIVER STORIES</span>
           <h2 style={styles.sectionTitle}>Trusted by families and medical experts</h2>
         </div>
 
-        <div style={styles.testimonialGrid}>
+        <div style={styles.testimonialGrid} className="landing-testimonial-grid">
           {/* Testimonial 1 */}
           <div style={styles.testimonialCard}>
             <div style={{ display: 'flex', gap: '4px', marginBottom: '14px' }}>
@@ -333,10 +333,10 @@ export default function LandingPage() {
       </section>
 
       {/* ── Appointment & Consultation Booking Section ───────────── */}
-      <section id="booking" style={{ ...styles.sectionPadding, backgroundColor: 'var(--sidebar-bg)', borderRadius: '32px' }}>
-        <div style={styles.bookingContainer}>
+      <section id="booking" style={{ ...styles.sectionPadding, backgroundColor: 'var(--sidebar-bg)', borderRadius: '32px' }} className="landing-section-padding">
+        <div style={styles.bookingContainer} className="landing-booking-container">
           {/* Left Column: Image */}
-          <div style={styles.bookingImgCol}>
+          <div style={styles.bookingImgCol} className="landing-booking-img-col">
             <img
               src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=700"
               alt="Medical Consultation"
@@ -385,7 +385,7 @@ export default function LandingPage() {
                   />
                 </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }} className="landing-booking-form-grid">
                   <div>
                     <label style={styles.inputLabel}>Select Service</label>
                     <select
@@ -420,8 +420,8 @@ export default function LandingPage() {
       </section>
 
       {/* ── Footer ────────────────────────────────────────────────── */}
-      <footer style={styles.footer}>
-        <div style={styles.footerContainer}>
+      <footer style={styles.footer} className="landing-footer">
+        <div style={styles.footerContainer} className="landing-footer-container">
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '12px' }}>
               <div style={styles.logoBadge}>
@@ -437,7 +437,7 @@ export default function LandingPage() {
             </p>
           </div>
 
-          <div style={styles.footerLinksGrid}>
+          <div style={styles.footerLinksGrid} className="landing-footer-links-grid">
             <div>
               <h4 style={styles.footerColTitle}>Navigation</h4>
               <a href="#features" style={styles.footerLinkItem}>Features</a>
@@ -454,7 +454,7 @@ export default function LandingPage() {
           </div>
         </div>
 
-        <div style={styles.copyrightRow}>
+        <div style={styles.copyrightRow} className="landing-copyright-row">
           <span>© 2026 SMRITHI Care. All rights reserved.</span>
           <span>Designed with care for dementia & cognitive wellness.</span>
         </div>
@@ -583,6 +583,7 @@ const styles = {
     marginBottom: '36px',
     fontWeight: '500',
     maxWidth: '480px',
+    width: '100%',
   },
   heroBtnGroup: {
     display: 'flex',
