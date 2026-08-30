@@ -1,17 +1,22 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../firebase/useAuth';
-import { registerWithEmail, loginWithEmail } from '../firebase/auth';
-import { AlertCircle, Eye, EyeOff, Loader } from 'lucide-react';
+import { registerWithEmail, loginWithEmail, logout } from '../firebase/auth';
+import { AlertCircle, Eye, EyeOff, Loader, CheckCircle2 } from 'lucide-react';
 import '../styles/LoginSignup.css';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
 
 export default function LoginSignup() {
   const navigate = useNavigate();
-  const { currentUser } = useAuth();
-  const [activeTab, setActiveTab] = useState('login'); // 'login' or 'signup'
+  const location = useLocation();
+  const { currentUser, authLoading } = useAuth();
+  
+  const [activeTab, setActiveTab] = useState(() => {
+    return location.pathname === '/signup' ? 'signup' : 'login';
+  });
   const [isLoading, setIsLoading] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
 
   // Login form state
   const [loginEmail, setLoginEmail] = useState('');
@@ -30,12 +35,33 @@ export default function LoginSignup() {
   const [showSignupPassword, setShowSignupPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  // Redirect if already logged in
-  React.useEffect(() => {
-    if (currentUser) {
-      navigate('/home');
+  // Synchronize activeTab with URL pathname
+  useEffect(() => {
+    if (location.pathname === '/signup') {
+      setActiveTab('signup');
+    } else if (location.pathname === '/login') {
+      setActiveTab('login');
     }
-  }, [currentUser, navigate]);
+  }, [location.pathname]);
+
+  // Redirect if already logged in
+  useEffect(() => {
+    if (!authLoading && currentUser) {
+      navigate('/home', { replace: true });
+    }
+  }, [currentUser, authLoading, navigate]);
+
+  const handleModeChange = (mode) => {
+    setActiveTab(mode);
+    setLoginErrors({});
+    setSignupErrors({});
+    setSuccessMessage('');
+    if (mode === 'signup') {
+      navigate('/signup');
+    } else {
+      navigate('/login');
+    }
+  };
 
   // Firebase error message mapping
   const getFirebaseErrorMessage = (errorCode) => {
@@ -129,16 +155,16 @@ export default function LoginSignup() {
 
     setIsLoading(true);
     try {
-      // Create Firebase user
+      // 1. Create Firebase user
       const userCredential = await registerWithEmail(signupEmail, signupPassword);
       const userId = userCredential.user.uid;
 
-      // Create backend record (patient or caregiver)
+      // 2. Create backend record (patient or caregiver)
       const backendData =
         role === 'patient'
           ? {
               name: fullName,
-              age: 65, // TODO: get from form if needed
+              age: 65,
               gender: 'Other',
               dementia_stage: 'Early Stage',
               preferred_language: 'en',
@@ -167,8 +193,18 @@ export default function LoginSignup() {
         throw new Error(errData.detail || 'Failed to create profile on backend');
       }
 
-      // Signup successful, redirect to dashboard
-      navigate('/home');
+      // 3. Clear auth session so user is redirected to LOGIN page to authenticate
+      await logout();
+
+      // 4. Set success state & prefill login email
+      setSuccessMessage('Account created successfully! Please log in with your credentials.');
+      setLoginEmail(signupEmail);
+      setLoginPassword('');
+      setSignupErrors({});
+
+      // 5. Redirect to LOGIN page
+      setActiveTab('login');
+      navigate('/login');
     } catch (error) {
       const errorMessage = error.code
         ? getFirebaseErrorMessage(error.code)
@@ -182,6 +218,14 @@ export default function LoginSignup() {
     }
   };
 
+  if (authLoading) {
+    return (
+      <div className="login-signup-container">
+        <Loader size={36} color="var(--primary-green)" className="spinner" />
+      </div>
+    );
+  }
+
   return (
     <div className="login-signup-container">
       <div className="login-signup-card">
@@ -190,33 +234,36 @@ export default function LoginSignup() {
           <p className="login-signup-subtitle">Your caring cognitive companion</p>
         </div>
 
-        {/* Tab Toggle */}
-        <div className="login-signup-tabs">
+        {/* Options Selection */}
+        <div className="login-signup-options">
           <button
             type="button"
-            className={`tab-button ${activeTab === 'login' ? 'active' : ''}`}
-            onClick={() => {
-              setActiveTab('login');
-              setLoginErrors({});
-            }}
+            className={`option-btn ${activeTab === 'login' ? 'active' : ''}`}
+            onClick={() => handleModeChange('login')}
           >
-            Log In
+            <span className="option-label">Already have an account?</span>
+            <span className="option-title">Log in</span>
           </button>
           <button
             type="button"
-            className={`tab-button ${activeTab === 'signup' ? 'active' : ''}`}
-            onClick={() => {
-              setActiveTab('signup');
-              setSignupErrors({});
-            }}
+            className={`option-btn ${activeTab === 'signup' ? 'active' : ''}`}
+            onClick={() => handleModeChange('signup')}
           >
-            Sign Up
+            <span className="option-label">New to Smrithi?</span>
+            <span className="option-title">Sign up</span>
           </button>
         </div>
 
         {/* Login Form */}
         {activeTab === 'login' && (
           <form onSubmit={handleLoginSubmit} className="form-container">
+            {successMessage && (
+              <div className="success-banner">
+                <CheckCircle2 size={20} />
+                <span>{successMessage}</span>
+              </div>
+            )}
+
             {loginErrors.submit && (
               <div className="error-banner">
                 <AlertCircle size={20} />
@@ -290,6 +337,17 @@ export default function LoginSignup() {
                 'Log In'
               )}
             </button>
+
+            <p className="switch-mode-text">
+              New to Smrithi?{' '}
+              <button
+                type="button"
+                className="switch-mode-btn"
+                onClick={() => handleModeChange('signup')}
+              >
+                Sign up
+              </button>
+            </p>
           </form>
         )}
 
@@ -461,6 +519,17 @@ export default function LoginSignup() {
                 </>
               )}
             </button>
+
+            <p className="switch-mode-text">
+              Already have an account?{' '}
+              <button
+                type="button"
+                className="switch-mode-btn"
+                onClick={() => handleModeChange('login')}
+              >
+                Log in
+              </button>
+            </p>
           </form>
         )}
       </div>

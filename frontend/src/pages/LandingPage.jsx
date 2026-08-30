@@ -59,11 +59,11 @@ export default function LandingPage() {
           </nav>
 
           <div style={styles.navActions} className="landing-nav-actions">
-            <button style={styles.loginBtn} onClick={() => navigate('/login-signup')}>
+            <button style={styles.loginBtn} onClick={() => navigate('/login')}>
               Log In
             </button>
-            <button style={styles.getStartedBtn} onClick={() => navigate('/caregiver')}>
-              <ShieldCheck size={18} /> Caregiver Portal
+            <button style={styles.getStartedBtn} onClick={() => navigate('/login')}>
+              Get Started / Login
             </button>
           </div>
         </div>
@@ -83,8 +83,8 @@ export default function LandingPage() {
             </p>
 
             <div style={styles.heroBtnGroup}>
-              <button style={styles.primaryCta} onClick={() => navigate('/games')}>
-                Take Cognitive Services <ArrowRight size={18} />
+              <button style={styles.primaryCta} onClick={() => navigate('/login')}>
+                Get Started / Login <ArrowRight size={18} />
               </button>
             </div>
           </div>

@@ -31,6 +31,8 @@ export default function App() {
         {/* Public routes — no app layout */}
         <Route path="/" element={<LandingPage />} />
         <Route path="/landing" element={<LandingPage />} />
+        <Route path="/login" element={<LoginSignup />} />
+        <Route path="/signup" element={<LoginSignup />} />
         <Route path="/login-signup" element={<LoginSignup />} />
 
         {/* Protected routes — with layout */}
