@@ -16,11 +16,8 @@ export default function Footer() {
         {/* Right Side: Links */}
         <nav style={styles.navLinks} aria-label="Footer Links">
           <Link to="/" style={styles.link}>Home</Link>
-          <Link to="/library" style={styles.link}>Library</Link>
-          <Link to="/gallery" style={styles.link}>Gallery</Link>
           <Link to="/schedule" style={styles.linkActive}>Schedule</Link>
-          <Link to="/privacy" style={styles.link}>Privacy Policy</Link>
-          <Link to="/help" style={styles.link}>Help Center</Link>
+          <Link to="/games" style={styles.link}>Games</Link>
           <Link to="/caregiver" style={styles.link}>Caregiver Access</Link>
         </nav>
       </div>

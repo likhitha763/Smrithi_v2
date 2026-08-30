@@ -1,13 +1,18 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Navigate } from 'react-router-dom';
-import { useAuth } from '../firebase/useAuth';
+import { AuthContext } from '../firebase/AuthContext';
+import { Loader } from 'lucide-react';
 
 /**
- * ProtectedRoute — wraps a component and redirects to /login-signup if not authenticated
+ * ProtectedRoute — guards access to authenticated pages.
+ * - Shows a loading state while auth is being determined
+ * - Redirects to /login-signup if not authenticated
+ * - Allows access if authenticated
  */
 export default function ProtectedRoute({ children }) {
-  const { currentUser, authLoading } = useAuth();
+  const { currentUser, authLoading } = useContext(AuthContext);
 
+  // Show loading state while Firebase is checking auth
   if (authLoading) {
     return (
       <div
@@ -15,33 +20,29 @@ export default function ProtectedRoute({ children }) {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          minHeight: '100vh',
-          backgroundColor: 'var(--bg-color, #eaf5ea)',
+          height: '100vh',
+          backgroundColor: 'var(--bg-color)',
         }}
       >
         <div style={{ textAlign: 'center' }}>
-          <div
-            style={{
-              display: 'inline-block',
-              width: '40px',
-              height: '40px',
-              border: '4px solid var(--border-color, #d2ebd4)',
-              borderTop: '4px solid var(--primary-green, #1e6535)',
-              borderRadius: '50%',
-              animation: 'spin 1s linear infinite',
-            }}
+          <Loader
+            size={48}
+            color="var(--primary-green)"
+            style={{ animation: 'spin 1s linear infinite', marginBottom: '16px' }}
           />
-          <p style={{ marginTop: '16px', color: 'var(--text-muted, #526356)', fontSize: '14px' }}>
-            Checking authentication...
+          <p style={{ color: 'var(--text-muted)', fontSize: '1rem' }}>
+            Loading your dashboard...
           </p>
         </div>
       </div>
     );
   }
 
+  // Redirect to login if not authenticated
   if (!currentUser) {
-    return <Navigate to="/login-signup" replace />;
+    return <Navigate to="/login" replace />;
   }
 
+  // Allow access if authenticated
   return children;
 }

@@ -79,13 +79,6 @@ export default function Sidebar() {
           <HelpCircle size={20} />
           <span>Landing Page</span>
         </NavLink>
-        
-        {currentUser && (
-          <button onClick={handleLogout} style={{ ...styles.footerLink, background: 'none', border: 'none', width: '100%', cursor: 'pointer', textAlign: 'left', color: '#c62828' }}>
-            <LogOut size={20} color="#c62828" />
-            <span style={{ fontWeight: 600 }}>Log Out ({currentUser.displayName || currentUser.email?.split('@')[0]})</span>
-          </button>
-        )}
       </div>
     </aside>
   );

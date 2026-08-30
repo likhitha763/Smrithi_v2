@@ -145,8 +145,8 @@ export default function CaregiverDashboard() {
         {/* KPI 1: Heart Rate */}
         <div className="cg-kpi-card">
           <div className="cg-kpi-header">
-            <div className="cg-kpi-icon-wrapper" style={{ backgroundColor: '#E3F2FD' }}>
-              <Heart size={20} color="#1E88E5" />
+            <div className="cg-kpi-icon-wrapper" style={{ backgroundColor: 'var(--secondary-green)' }}>
+              <Heart size={20} color="var(--primary-green)" />
             </div>
             <span className="cg-badge-pill positive">
               <TrendingUp size={12} /> +2.5%
@@ -158,7 +158,7 @@ export default function CaregiverDashboard() {
               <span className="cg-kpi-value">72 <span style={{ fontSize: '0.9rem', fontWeight: 600, color: 'var(--text-muted)' }}>bpm</span></span>
               {/* Mini Sparkline Chart */}
               <svg width="60" height="24" viewBox="0 0 60 24" fill="none">
-                <path d="M2 18 C 10 20, 20 5, 30 14 C 40 22, 50 4, 58 8" stroke="#1E88E5" strokeWidth="2.5" strokeLinecap="round" />
+                <path d="M2 18 C 10 20, 20 5, 30 14 C 40 22, 50 4, 58 8" stroke="var(--primary-green)" strokeWidth="2.5" strokeLinecap="round" />
               </svg>
             </div>
             <div className="cg-kpi-subtext">vs last month</div>
@@ -220,8 +220,8 @@ export default function CaregiverDashboard() {
         {/* KPI 4: Rest & Activity */}
         <div className="cg-kpi-card">
           <div className="cg-kpi-header">
-            <div className="cg-kpi-icon-wrapper" style={{ backgroundColor: '#FCE4EC' }}>
-              <Activity size={20} color="#C2185B" />
+            <div className="cg-kpi-icon-wrapper" style={{ backgroundColor: 'var(--warning-bg)' }}>
+              <Activity size={20} color="var(--warning-orange)" />
             </div>
             <span className="cg-badge-pill positive">
               <TrendingUp size={12} /> +4.1%
@@ -233,7 +233,7 @@ export default function CaregiverDashboard() {
               <span className="cg-kpi-value">7.5 <span style={{ fontSize: '0.9rem', fontWeight: 600, color: 'var(--text-muted)' }}>hrs</span></span>
               {/* Mini Sparkline Chart */}
               <svg width="60" height="24" viewBox="0 0 60 24" fill="none">
-                <path d="M2 14 C 15 2, 30 22, 45 6 C 52 14, 56 10, 58 4" stroke="#C2185B" strokeWidth="2.5" strokeLinecap="round" />
+                <path d="M2 14 C 15 2, 30 22, 45 6 C 52 14, 56 10, 58 4" stroke="var(--warning-orange)" strokeWidth="2.5" strokeLinecap="round" />
               </svg>
             </div>
             <div className="cg-kpi-subtext">Optimal sleep pattern</div>
@@ -384,7 +384,7 @@ export default function CaregiverDashboard() {
               <span style={{ fontWeight: 700 }}>98.6 °F</span>
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.85rem' }}>
-              <span style={{ color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '6px' }}><Activity size={14} color="#1e88e5" /> Oxygen (SpO2)</span>
+              <span style={{ color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '6px' }}><Activity size={14} color="var(--primary-green)" /> Oxygen (SpO2)</span>
               <span style={{ fontWeight: 700 }}>98%</span>
             </div>
           </div>

@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Sidebar from './Sidebar';
 import TopNav from './TopNav';
 import Footer from './Footer';
 import BottomNav from './BottomNav';
+import MobileDrawer from './MobileDrawer';
 
 /**
  * Layout — wraps every page with the correct navigation:
@@ -14,11 +15,13 @@ import BottomNav from './BottomNav';
  *
  *  Mobile (<768 px):
  *    • Bottom nav    ← ONLY navigation  [class: bottom-nav-mobile]
- *    • NO sidebar, NO utility bar
+ *    • NO sidebar, NO utility bar (now utility bar is visible as mobile top nav with logo & drawer button)
  *
  * CSS classes control visibility — no JS media-query needed.
  */
 export default function Layout({ children }) {
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
   return (
     <div className="app-container">
       {/* ── Sidebar: desktop & tablet only (hidden on mobile via CSS) ── */}
@@ -28,8 +31,8 @@ export default function Layout({ children }) {
 
       {/* ── Main content column ─────────────────────────────────────── */}
       <div className="main-wrapper">
-        {/* Utility bar: desktop & tablet only (hidden on mobile via CSS) */}
-        <TopNav />
+        {/* Utility bar: visible on desktop/tablet, modified header layout on mobile */}
+        <TopNav onMenuClick={() => setIsDrawerOpen(true)} />
 
         {/* Page content */}
         <main className="content-area">
@@ -42,6 +45,9 @@ export default function Layout({ children }) {
 
       {/* ── Bottom nav: mobile only (hidden on desktop via CSS) ─────── */}
       <BottomNav />
+
+      {/* ── Mobile Sidebar Drawer ────────────────────────────────────── */}
+      <MobileDrawer isOpen={isDrawerOpen} onClose={() => setIsDrawerOpen(false)} />
     </div>
   );
 }
