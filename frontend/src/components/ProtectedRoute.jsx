@@ -1,9 +1,47 @@
 import React from 'react';
+import { Navigate } from 'react-router-dom';
+import { useAuth } from '../firebase/useAuth';
 
 /**
- * ProtectedRoute — temporarily bypasses auth check in dev/demo mode so all UI pages can be tested.
- * To re-enable strict auth redirect later, restore `if (!currentUser) return <Navigate to="/login-signup" />`.
+ * ProtectedRoute — wraps a component and redirects to /login-signup if not authenticated
  */
 export default function ProtectedRoute({ children }) {
+  const { currentUser, authLoading } = useAuth();
+
+  if (authLoading) {
+    return (
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          minHeight: '100vh',
+          backgroundColor: 'var(--bg-color, #eaf5ea)',
+        }}
+      >
+        <div style={{ textAlign: 'center' }}>
+          <div
+            style={{
+              display: 'inline-block',
+              width: '40px',
+              height: '40px',
+              border: '4px solid var(--border-color, #d2ebd4)',
+              borderTop: '4px solid var(--primary-green, #1e6535)',
+              borderRadius: '50%',
+              animation: 'spin 1s linear infinite',
+            }}
+          />
+          <p style={{ marginTop: '16px', color: 'var(--text-muted, #526356)', fontSize: '14px' }}>
+            Checking authentication...
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!currentUser) {
+    return <Navigate to="/login-signup" replace />;
+  }
+
   return children;
 }

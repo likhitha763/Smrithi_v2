@@ -2,7 +2,7 @@ const VOICE_API_BASE_URL = (import.meta.env.VITE_VOICE_API_BASE_URL || '').repla
 
 const VOICE_PREFERENCES = {
   en: { name: 'English', exact: ['en-in', 'en-us'], prefix: 'en' },
-  as: { name: 'Assamese', exact: ['as-in'], prefix: 'as' },
+  as: { name: 'Assamese', exact: ['as-in', 'bn-in'], prefix: 'as' },
   hi: { name: 'Hindi', exact: ['hi-in'], prefix: 'hi' },
   kn: { name: 'Kannada', exact: ['kn-in'], prefix: 'kn' },
 };
@@ -42,13 +42,24 @@ export function stopVoicePlayback() {
 }
 
 export async function getVoiceLanguages() {
-  const response = await fetch(voiceApiUrl('/voice/languages'));
-  if (!response.ok) {
-    throw new Error('Voice languages could not be loaded.');
+  try {
+    const response = await fetch(voiceApiUrl('/voice/languages'));
+    if (response.ok) {
+      const data = await response.json();
+      if (Array.isArray(data.languages)) {
+        return data.languages;
+      }
+    }
+  } catch {
+    // Return default supported list if backend is loading
   }
 
-  const data = await response.json();
-  return Array.isArray(data.languages) ? data.languages : [];
+  return [
+    { code: 'en', name: 'English', native_name: 'English' },
+    { code: 'as', name: 'Assamese', native_name: 'অসমীয়া' },
+    { code: 'hi', name: 'Hindi', native_name: 'हिन्दी' },
+    { code: 'kn', name: 'Kannada', native_name: 'ಕನ್ನಡ' },
+  ];
 }
 
 async function getAvailableSpeechVoices(speechSynthesis) {
@@ -58,7 +69,7 @@ async function getAvailableSpeechVoices(speechSynthesis) {
   }
 
   await new Promise((resolve) => {
-    const timeout = window.setTimeout(done, 1500);
+    const timeout = window.setTimeout(done, 1200);
 
     function done() {
       window.clearTimeout(timeout);
@@ -69,25 +80,33 @@ async function getAvailableSpeechVoices(speechSynthesis) {
     speechSynthesis.addEventListener?.('voiceschanged', done, { once: true });
   });
 
-  voices = speechSynthesis.getVoices();
-  return voices;
+  return speechSynthesis.getVoices();
 }
 
 function selectSpeechVoice(voices, language) {
-  const preference = VOICE_PREFERENCES[language];
-  if (!preference) {
+  if (!voices || voices.length === 0) {
     return null;
   }
 
-  const normalized = voices.map((voice) => ({ voice, locale: voice.lang.toLowerCase() }));
-  for (const locale of preference.exact) {
-    const match = normalized.find((item) => item.locale === locale);
-    if (match) {
-      return match.voice;
+  const preference = VOICE_PREFERENCES[language];
+  if (preference) {
+    const normalized = voices.map((voice) => ({ voice, locale: voice.lang.toLowerCase() }));
+    for (const locale of preference.exact) {
+      const match = normalized.find((item) => item.locale === locale);
+      if (match) {
+        return match.voice;
+      }
+    }
+    const prefixMatch = normalized.find(
+      (item) => item.locale === preference.prefix || item.locale.startsWith(`${preference.prefix}-`)
+    );
+    if (prefixMatch) {
+      return prefixMatch.voice;
     }
   }
 
-  return normalized.find((item) => item.locale === preference.prefix || item.locale.startsWith(`${preference.prefix}-`))?.voice || null;
+  // Fallback to default or first available browser voice so TTS never fails silently
+  return voices.find((v) => v.default) || voices[0] || null;
 }
 
 function createPlayback(resolve) {
@@ -109,15 +128,15 @@ function createPlayback(resolve) {
   return playback;
 }
 
-function playRecordedAudio(audioUrl) {
+function playAudioSource(src) {
   return new Promise((resolve) => {
     const playback = createPlayback(resolve);
-    const audio = new Audio(voiceApiUrl(audioUrl));
+    const audio = new Audio(src);
     activeAudio = audio;
 
-    audio.onended = () => playback.finish({ success: true, mode: 'recorded_audio' });
-    audio.onerror = () => playback.finish({ success: false, error: 'Recorded audio could not be played.' });
-    audio.play().catch(() => playback.finish({ success: false, error: 'Recorded audio could not be played.' }));
+    audio.onended = () => playback.finish({ success: true, mode: 'audio_stream' });
+    audio.onerror = () => playback.finish({ success: false, error: 'Audio source could not be played.' });
+    audio.play().catch(() => playback.finish({ success: false, error: 'Audio playback error.' }));
   });
 }
 
@@ -131,16 +150,14 @@ async function speakWithBrowserTts(text, language, requestId) {
   if (requestId !== voiceRequestId) {
     return { success: false, cancelled: true };
   }
-  if (!voice) {
-    const languageName = VOICE_PREFERENCES[language]?.name || language;
-    return { success: false, error: `${languageName} speech is not installed in this browser.` };
-  }
 
   return new Promise((resolve) => {
     const playback = createPlayback(resolve);
     const utterance = new SpeechSynthesisUtterance(text);
-    utterance.voice = voice;
-    utterance.lang = voice.lang;
+    if (voice) {
+      utterance.voice = voice;
+      utterance.lang = voice.lang;
+    }
     utterance.rate = 0.85;
     utterance.pitch = 1;
     utterance.onend = () => playback.finish({ success: true, mode: 'browser_tts' });
@@ -150,20 +167,56 @@ async function speakWithBrowserTts(text, language, requestId) {
   });
 }
 
+/**
+ * Synthesize & speak text using Backend FastAPI gTTS service first.
+ * Falls back to browser TTS if backend is offline.
+ */
+async function speakWithBackendTts(text, language, requestId) {
+  try {
+    const response = await fetch(voiceApiUrl('/api/voice/synthesize'), {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text, language, speed_rate: 1.0 }),
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      if (requestId !== voiceRequestId) {
+        return { success: false, cancelled: true };
+      }
+
+      if (data.audio_base64) {
+        return playAudioSource(`data:audio/mp3;base64,${data.audio_base64}`);
+      } else if (data.audio_url) {
+        return playAudioSource(voiceApiUrl(data.audio_url));
+      }
+    }
+  } catch {
+    // Fall back to browser TTS if backend fails or network offline
+  }
+
+  if (requestId !== voiceRequestId) {
+    return { success: false, cancelled: true };
+  }
+  return speakWithBrowserTts(text, language, requestId);
+}
+
 export async function speakVoiceText(text, language = 'en') {
   const requestId = ++voiceRequestId;
   stopActivePlayback();
-  return speakWithBrowserTts(text, language, requestId);
+  return speakWithBackendTts(text, language, requestId);
 }
 
 export async function speakVoicePrompt(language, keyOrText) {
   const requestId = ++voiceRequestId;
   stopActivePlayback();
 
+  // 1. If keyOrText is a direct sentence string, speak via Backend TTS
   if (typeof keyOrText === 'string' && (keyOrText.includes(' ') || keyOrText.length > 25)) {
-    return speakWithBrowserTts(keyOrText, language, requestId);
+    return speakWithBackendTts(keyOrText, language, requestId);
   }
 
+  // 2. Try fetching localized backend prompt
   let prompt;
   try {
     const response = await fetch(voiceApiUrl(`/voice/prompt/${language}/${keyOrText}`));
@@ -180,15 +233,14 @@ export async function speakVoicePrompt(language, keyOrText) {
 
   if (prompt && prompt.success && prompt.text) {
     if (prompt.audio_available && prompt.audio_url) {
-      const audioResult = await playRecordedAudio(prompt.audio_url);
+      const audioResult = await playAudioSource(voiceApiUrl(prompt.audio_url));
       if (audioResult.success || audioResult.cancelled || requestId !== voiceRequestId) {
         return audioResult;
       }
     }
-    return speakWithBrowserTts(prompt.text, language, requestId);
+    return speakWithBackendTts(prompt.text, language, requestId);
   }
 
-  // Fallback to browser TTS with string directly
-  return speakWithBrowserTts(keyOrText, language, requestId);
+  // Fallback: Synthesize keyOrText directly
+  return speakWithBackendTts(keyOrText, language, requestId);
 }
-

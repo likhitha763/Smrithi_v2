@@ -1,8 +1,22 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
-import { Home, Gamepad2, Image, Calendar, ShieldCheck, HelpCircle, ShieldAlert } from 'lucide-react';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { Home, Gamepad2, Image, Calendar, ShieldCheck, HelpCircle, ShieldAlert, LogOut } from 'lucide-react';
+import { logout } from '../firebase/auth';
+import { useAuth } from '../firebase/useAuth';
 
 export default function Sidebar() {
+  const navigate = useNavigate();
+  const { currentUser } = useAuth();
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      navigate('/login-signup');
+    } catch (e) {
+      console.error("Logout failed:", e);
+    }
+  };
+
   return (
     <aside style={styles.sidebar}>
       {/* Brand Header */}
@@ -23,34 +37,34 @@ export default function Sidebar() {
       <nav style={styles.navMenu} aria-label="Main Navigation">
         <NavLink 
           to="/home" 
-          style={({ isActive }) => isActive ? { ...styles.navLink, ...styles.navLinkActive } : styles.navLink}
+          style={({ isActive }) => ({ ...styles.navLink, ...(isActive ? styles.navLinkActive : {}) })}
         >
           <Home size={22} />
-          <span>Home</span>
+          <span>Patient Home</span>
         </NavLink>
         
         <NavLink 
           to="/games" 
-          style={({ isActive }) => isActive ? { ...styles.navLink, ...styles.navLinkActive } : styles.navLink}
+          style={({ isActive }) => ({ ...styles.navLink, ...(isActive ? styles.navLinkActive : {}) })}
         >
           <Gamepad2 size={22} />
-          <span>Games</span>
+          <span>Play & Remember</span>
         </NavLink>
         
         <NavLink 
           to="/memories" 
-          style={({ isActive }) => isActive ? { ...styles.navLink, ...styles.navLinkActive } : styles.navLink}
+          style={({ isActive }) => ({ ...styles.navLink, ...(isActive ? styles.navLinkActive : {}) })}
         >
           <Image size={22} />
-          <span>Memories</span>
+          <span>Family Memories</span>
         </NavLink>
         
         <NavLink 
           to="/schedule" 
-          style={({ isActive }) => isActive ? { ...styles.navLink, ...styles.navLinkActive } : styles.navLink}
+          style={({ isActive }) => ({ ...styles.navLink, ...(isActive ? styles.navLinkActive : {}) })}
         >
           <Calendar size={22} />
-          <span>Daily Care</span>
+          <span>Daily Routine</span>
         </NavLink>
       </nav>
 
@@ -66,15 +80,12 @@ export default function Sidebar() {
           <span>Landing Page</span>
         </NavLink>
         
-        <NavLink to="/help" style={styles.footerLink}>
-          <HelpCircle size={20} />
-          <span>Help</span>
-        </NavLink>
-        
-        <NavLink to="/privacy" style={styles.footerLink}>
-          <ShieldAlert size={20} />
-          <span>Privacy</span>
-        </NavLink>
+        {currentUser && (
+          <button onClick={handleLogout} style={{ ...styles.footerLink, background: 'none', border: 'none', width: '100%', cursor: 'pointer', textAlign: 'left', color: '#c62828' }}>
+            <LogOut size={20} color="#c62828" />
+            <span style={{ fontWeight: 600 }}>Log Out ({currentUser.displayName || currentUser.email?.split('@')[0]})</span>
+          </button>
+        )}
       </div>
     </aside>
   );
