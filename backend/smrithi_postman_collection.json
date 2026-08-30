@@ -1,0 +1,238 @@
+{
+  "info": {
+    "_postman_id": "smrithi-v2-api-collection",
+    "name": "SMRITHI Backend API",
+    "description": "Complete Postman Collection for SMRITHI AI Cognitive Gaming & Caregiver Platform Endpoints",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. Server & Health",
+      "item": [
+        {
+          "name": "Root Status",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8000/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": [""]
+            }
+          }
+        },
+        {
+          "name": "Health Check",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8000/health",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["health"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "2. Auth & Login",
+      "item": [
+        {
+          "name": "Demo Caregiver Login",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8000/api/auth/demo-login",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "auth", "demo-login"]
+            }
+          }
+        },
+        {
+          "name": "Verify Firebase ID Token",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id_token\": \"<YOUR_FIREBASE_ID_TOKEN>\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/auth/verify",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "auth", "verify"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "3. Caregiver & Patient Management (Firestore)",
+      "item": [
+        {
+          "name": "Save Caregiver Profile",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"caregiver_id\": \"demo_caregiver_123\",\n  \"full_name\": \"Asha Devi\",\n  \"email\": \"caregiver@smrithi.org\",\n  \"phone\": \"+91 9876543210\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/caregiver/profile",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "caregiver", "profile"]
+            }
+          }
+        },
+        {
+          "name": "Add Patient",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Biren Sharma\",\n  \"age\": 72,\n  \"language\": \"as\",\n  \"notes\": \"Dementia stage 1, early memory recall assistance\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/caregiver/patients/demo_caregiver_123",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "caregiver", "patients", "demo_caregiver_123"]
+            }
+          }
+        },
+        {
+          "name": "Log Game Session (Memory Match)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"game_type\": \"memory-match\",\n  \"correct_count\": 2,\n  \"missed_count\": 1,\n  \"wrong_count\": 0,\n  \"response_time_ms\": 4820\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/caregiver/sessions/demo_caregiver_123/<PATIENT_ID>",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "caregiver", "sessions", "demo_caregiver_123", "<PATIENT_ID>"]
+            }
+          }
+        },
+        {
+          "name": "Add Reminder",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Morning Donepezil Dosage\",\n  \"time\": \"09:00 AM\",\n  \"category\": \"Medicine\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/caregiver/reminders/demo_caregiver_123/<PATIENT_ID>",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "caregiver", "reminders", "demo_caregiver_123", "<PATIENT_ID>"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "4. Voice & Languages",
+      "item": [
+        {
+          "name": "Get Supported Languages",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8000/voice/languages",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["voice", "languages"]
+            }
+          }
+        },
+        {
+          "name": "Get Voice Prompt (English)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8000/voice/prompt/en/welcome",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["voice", "prompt", "en", "welcome"]
+            }
+          }
+        },
+        {
+          "name": "Synthesize Speech (TTS)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"text\": \"Welcome to Smrithi memory care\",\n  \"language\": \"as\",\n  \"speed_rate\": 1.0\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/voice/synthesize",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "voice", "synthesize"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

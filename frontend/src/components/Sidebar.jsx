@@ -1,8 +1,22 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
-import { Home, Gamepad2, Image, Calendar, ShieldCheck, HelpCircle, ShieldAlert } from 'lucide-react';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { Home, Gamepad2, Image, Calendar, ShieldCheck, HelpCircle, ShieldAlert, LogOut } from 'lucide-react';
+import { logout } from '../firebase/auth';
+import { useAuth } from '../firebase/useAuth';
 
 export default function Sidebar() {
+  const navigate = useNavigate();
+  const { currentUser } = useAuth();
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      navigate('/login-signup');
+    } catch (e) {
+      console.error("Logout failed:", e);
+    }
+  };
+
   return (
     <aside style={styles.sidebar}>
       {/* Brand Header */}
@@ -23,34 +37,34 @@ export default function Sidebar() {
       <nav style={styles.navMenu} aria-label="Main Navigation">
         <NavLink 
           to="/home" 
-          style={({ isActive }) => isActive ? { ...styles.navLink, ...styles.navLinkActive } : styles.navLink}
+          style={({ isActive }) => ({ ...styles.navLink, ...(isActive ? styles.navLinkActive : {}) })}
         >
           <Home size={22} />
-          <span>Home</span>
+          <span>Patient Home</span>
         </NavLink>
         
         <NavLink 
           to="/games" 
-          style={({ isActive }) => isActive ? { ...styles.navLink, ...styles.navLinkActive } : styles.navLink}
+          style={({ isActive }) => ({ ...styles.navLink, ...(isActive ? styles.navLinkActive : {}) })}
         >
           <Gamepad2 size={22} />
-          <span>Games</span>
+          <span>Play & Remember</span>
         </NavLink>
         
         <NavLink 
           to="/memories" 
-          style={({ isActive }) => isActive ? { ...styles.navLink, ...styles.navLinkActive } : styles.navLink}
+          style={({ isActive }) => ({ ...styles.navLink, ...(isActive ? styles.navLinkActive : {}) })}
         >
           <Image size={22} />
-          <span>Memories</span>
+          <span>Family Memories</span>
         </NavLink>
         
         <NavLink 
           to="/schedule" 
-          style={({ isActive }) => isActive ? { ...styles.navLink, ...styles.navLinkActive } : styles.navLink}
+          style={({ isActive }) => ({ ...styles.navLink, ...(isActive ? styles.navLinkActive : {}) })}
         >
           <Calendar size={22} />
-          <span>Daily Care</span>
+          <span>Daily Routine</span>
         </NavLink>
       </nav>
 
