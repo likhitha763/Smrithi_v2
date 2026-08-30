@@ -921,6 +921,11 @@ button {
     gap: 20px !important;
   }
 
+  .games-play-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 20px !important;
+  }
+
 
   .landing-nav-container {
     display: flex !important;
@@ -1135,6 +1140,23 @@ button {
     font-size: 0.95rem !important;
   }
 
+  .landing-trust-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .trust-card {
+    padding: 24px 20px !important;
+  }
+
+  .games-play-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+
+  .games-play-card {
+    padding: 24px 16px !important;
+  }
+
   /* ── FOOTER ── */
   .landing-footer {
     padding: 48px 20px 24px 20px !important;
@@ -1273,4 +1295,27 @@ button {
   transform: translateY(-4px) !important;
   box-shadow: 0 14px 32px rgba(30, 101, 53, 0.08) !important;
   border-color: #b5ddb9 !important;
+}
+
+/* ── SMRITHI Suggests Mobile Horizontal Scroll ───────────────── */
+@media (max-width: 768px) {
+  .suggest-grid {
+    display: flex !important;
+    flex-direction: row !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory !important;
+    -webkit-overflow-scrolling: touch;
+    gap: 16px !important;
+    padding-bottom: 8px !important;
+    scrollbar-width: none;
+  }
+
+  .suggest-grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .suggest-card {
+    flex: 0 0 78% !important;
+    scroll-snap-align: start !important;
+  }
 }

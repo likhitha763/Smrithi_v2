@@ -25,9 +25,9 @@ export default function Games() {
       <VoiceLanguagePanel selectedLanguage={selectedLanguage} onLanguageChange={handleLanguageChange} />
 
       {/* Grid of 5 games matching distinct routes */}
-      <div style={styles.playGrid}>
+      <div style={styles.playGrid} className="games-play-grid">
         {/* Game 1: Memory Match */}
-        <div style={styles.playCard}>
+        <div style={styles.playCard} className="games-play-card">
           <div style={styles.iconCircleBig}>
             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--primary-green)" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
               <rect width="10" height="14" x="3" y="3" rx="2" />
@@ -49,7 +49,7 @@ export default function Games() {
         </div>
 
         {/* Game 2: Recognition */}
-        <div style={styles.playCard}>
+        <div style={styles.playCard} className="games-play-card">
           <div style={styles.iconCircleBig}>
             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--primary-green)" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
               <circle cx="12" cy="12" r="10" />
@@ -73,7 +73,7 @@ export default function Games() {
         </div>
 
         {/* Game 3: Sequence Recall */}
-        <div style={styles.playCard}>
+        <div style={styles.playCard} className="games-play-card">
           <div style={styles.iconCircleBig}>
             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--primary-green)" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
               <path d="m17 2 4 4-4 4" />
@@ -97,7 +97,7 @@ export default function Games() {
         </div>
 
         {/* Game 4: Folk Motif */}
-        <div style={styles.playCard}>
+        <div style={styles.playCard} className="games-play-card">
           <div style={styles.iconCircleBig}>
             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--primary-green)" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
               <rect width="18" height="18" x="3" y="3" rx="2" />
@@ -122,7 +122,7 @@ export default function Games() {
         </div>
 
         {/* Game 5: Regional Kitchen */}
-        <div style={styles.playCard}>
+        <div style={styles.playCard} className="games-play-card">
           <div style={styles.iconCircleBig}>
             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--primary-green)" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M12 2v9" />

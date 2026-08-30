@@ -221,9 +221,10 @@ export default function Home() {
       {/* SMRITHI Suggests Bottom Cards */}
       <div>
         <h2 style={{ ...styles.sectionHeader, marginBottom: '18px' }}>SMRITHI Suggests</h2>
-        <div style={styles.suggestGrid}>
+        <div style={styles.suggestGrid} className="suggest-grid">
           <div
             style={styles.suggestCard}
+            className="suggest-card"
             onClick={() => handleSuggestionAction('music')}
             onKeyDown={(event) => {
               if (event.key === 'Enter' || event.key === ' ') {
@@ -244,6 +245,7 @@ export default function Home() {
 
           <div
             style={styles.suggestCard}
+            className="suggest-card"
             onClick={() => handleSuggestionAction('garden')}
             onKeyDown={(event) => {
               if (event.key === 'Enter' || event.key === ' ') {
@@ -264,6 +266,7 @@ export default function Home() {
 
           <div
             style={styles.suggestCard}
+            className="suggest-card"
             onClick={() => handleSuggestionAction('breathing')}
             onKeyDown={(event) => {
               if (event.key === 'Enter' || event.key === ' ') {
