@@ -83,8 +83,8 @@ export default function TopNav() {
     {
       id: 3,
       icon: MessageSquare,
-      iconBg: '#E1F5FE',
-      iconColor: '#0277BD',
+      iconBg: '#E9F4EC',
+      iconColor: 'var(--primary-green)',
       title: 'Caregiver Note',
       message: 'Ramesh updated tomorrow’s walk schedule to 9:00 AM',
       time: '3h ago',

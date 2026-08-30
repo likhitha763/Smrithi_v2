@@ -389,10 +389,10 @@ export default function LandingPage() {
             </div>
 
             <div>
-              <h4 style={styles.footerColTitle}>Legal & Security</h4>
-              <a href="#" style={styles.footerLinkItem}>Privacy Policy</a>
-              <a href="#" style={styles.footerLinkItem}>Terms of Service</a>
-              <a href="#" style={styles.footerLinkItem}>HIPAA Compliance</a>
+              <h4 style={styles.footerColTitle}>Explore</h4>
+              <a href="#features" style={styles.footerLinkItem}>Features</a>
+              <a href="#booking" style={styles.footerLinkItem}>Consultation</a>
+              <a href="/caregiver" style={styles.footerLinkItem}>Caregiver Portal</a>
             </div>
           </div>
         </div>

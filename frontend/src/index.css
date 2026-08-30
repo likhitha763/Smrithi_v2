@@ -317,13 +317,7 @@ button {
   right: 7px;
   width: 10px;
   height: 10px;
-  background-color: #FF5A5F;
-  border-radius: 50%;
-  border: 2px solid var(--surface-color, #ffffff);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
-}
-
-.nav-dropdown-menu {
+  background-color: #D96C63;
   position: absolute;
   top: calc(100% + 12px);
   right: 0;

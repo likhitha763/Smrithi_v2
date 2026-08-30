@@ -38,6 +38,22 @@ export default function Home() {
     }
   ];
 
+  const handleSuggestionAction = (type) => {
+    if (type === 'music') {
+      setTalkTranscript("I can play a gentle mix of your favorite classics. Let’s slow down and enjoy the melody together.");
+      setShowTalkModal(true);
+      return;
+    }
+
+    if (type === 'garden') {
+      navigate('/games');
+      return;
+    }
+
+    setTalkTranscript("Let’s take five slow breaths together. Inhale for four, exhale for six, and let your shoulders soften.");
+    setShowTalkModal(true);
+  };
+
   const handleMarkMedicine = () => {
     if (!medicineTaken) {
       setMedicineTaken(true);
@@ -206,7 +222,19 @@ export default function Home() {
       <div>
         <h2 style={{ ...styles.sectionHeader, marginBottom: '18px' }}>SMRITHI Suggests</h2>
         <div style={styles.suggestGrid}>
-          <div style={styles.suggestCard}>
+          <div
+            style={styles.suggestCard}
+            onClick={() => handleSuggestionAction('music')}
+            onKeyDown={(event) => {
+              if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                handleSuggestionAction('music');
+              }
+            }}
+            role="button"
+            tabIndex={0}
+            aria-label="Listen to classics"
+          >
             <div style={styles.suggestIconBox}>
               <Music size={24} color="var(--primary-green)" />
             </div>
@@ -214,7 +242,19 @@ export default function Home() {
             <p style={styles.suggestDesc}>A calming playlist of your favorite 70s melodies.</p>
           </div>
 
-          <div style={styles.suggestCard}>
+          <div
+            style={styles.suggestCard}
+            onClick={() => handleSuggestionAction('garden')}
+            onKeyDown={(event) => {
+              if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                handleSuggestionAction('garden');
+              }
+            }}
+            role="button"
+            tabIndex={0}
+            aria-label="Go to garden time activity"
+          >
             <div style={styles.suggestIconBox}>
               <Flower2 size={24} color="var(--primary-green)" />
             </div>
@@ -222,7 +262,19 @@ export default function Home() {
             <p style={styles.suggestDesc}>The weather is nice for a short walk outside.</p>
           </div>
 
-          <div style={styles.suggestCard}>
+          <div
+            style={styles.suggestCard}
+            onClick={() => handleSuggestionAction('breathing')}
+            onKeyDown={(event) => {
+              if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                handleSuggestionAction('breathing');
+              }
+            }}
+            role="button"
+            tabIndex={0}
+            aria-label="Start a breathing exercise"
+          >
             <div style={styles.suggestIconBox}>
               <Heart size={24} color="var(--primary-green)" />
             </div>
@@ -570,6 +622,8 @@ const styles = {
     flexDirection: 'column',
     alignItems: 'flex-start',
     gap: '10px',
+    cursor: 'pointer',
+    transition: 'transform 0.2s ease, box-shadow 0.2s ease',
   },
   suggestIconBox: {
     width: '44px',

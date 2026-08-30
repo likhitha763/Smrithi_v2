@@ -65,16 +65,6 @@ export default function Sidebar() {
           <HelpCircle size={20} />
           <span>Landing Page</span>
         </NavLink>
-        
-        <NavLink to="/help" style={styles.footerLink}>
-          <HelpCircle size={20} />
-          <span>Help</span>
-        </NavLink>
-        
-        <NavLink to="/privacy" style={styles.footerLink}>
-          <ShieldAlert size={20} />
-          <span>Privacy</span>
-        </NavLink>
       </div>
     </aside>
   );
