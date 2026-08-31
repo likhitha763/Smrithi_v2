@@ -31,7 +31,7 @@ export default function DailyCare() {
       </div>
 
       {/* Two Column Layout: Schedule and Goals */}
-      <div style={styles.layoutGrid}>
+      <div style={styles.layoutGrid} className="daily-care-layout-grid">
         {/* Left Column: Schedule */}
         <div style={styles.scheduleCol}>
           <h2 style={styles.sectionHeader}>Schedule</h2>

@@ -314,7 +314,7 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     gap: 'var(--spacing-xl)',
-    paddingBottom: '100px',
+    paddingBottom: '24px',
   },
   header: {
     marginBottom: 'var(--spacing-sm)',

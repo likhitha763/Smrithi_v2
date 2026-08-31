@@ -1297,25 +1297,127 @@ button {
   border-color: #b5ddb9 !important;
 }
 
-/* ── SMRITHI Suggests Mobile Horizontal Scroll ───────────────── */
-@media (max-width: 768px) {
+/* ═══════════════════════════════════════════════════════════════
+   MOBILE CARD-ROW FIXES — 375px / 320px audit
+   Covers: Home, Games, ActivityHub, DailyCare, Memories, CaregiverDashboard
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── FIX 1: SMRITHI Suggests — vertical stack below 480px ─────── */
+@media (max-width: 480px) {
   .suggest-grid {
     display: flex !important;
-    flex-direction: row !important;
-    overflow-x: auto !important;
-    scroll-snap-type: x mandatory !important;
-    -webkit-overflow-scrolling: touch;
+    flex-direction: column !important;
     gap: 16px !important;
-    padding-bottom: 8px !important;
-    scrollbar-width: none;
-  }
-
-  .suggest-grid::-webkit-scrollbar {
-    display: none;
+    overflow-x: unset !important;
+    scroll-snap-type: unset !important;
   }
 
   .suggest-card {
-    flex: 0 0 78% !important;
-    scroll-snap-align: start !important;
+    flex: unset !important;
+    width: 100% !important;
+    scroll-snap-align: unset !important;
+  }
+}
+
+/* ── FIX 2: Footer — hide nav links on mobile, prevent overlap with bottom nav */
+@media (max-width: 767px) {
+  /* Hide redundant footer nav links — bottom nav already covers navigation */
+  .footer-nav-links {
+    display: none !important;
+  }
+
+  /* Footer itself: reduce padding and ensure it clears the fixed bottom nav */
+  .app-footer {
+    padding: 20px 16px !important;
+    margin-bottom: var(--bottom-nav-height) !important;
+    margin-top: 16px !important;
+  }
+}
+
+/* ── FIX 3: Home — widget row and two-column grid — stack below 480px ── */
+@media (max-width: 480px) {
+  .home-widget-row {
+    grid-template-columns: 1fr !important;
+  }
+
+  .home-two-col-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .home-callout-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .home-memories-carousel {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+/* ── FIX 4: ActivityHub — activity grid min-width is too wide for mobile ── */
+@media (max-width: 480px) {
+  .activity-hub-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ── FIX 5: DailyCare — fixed 1.7fr 1fr layout stacks below 768px ── */
+@media (max-width: 767px) {
+  .daily-care-layout-grid {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+  }
+}
+
+/* ── FIX 6: Memories — 2-col grid with span-2 card → single col below 480px ── */
+@media (max-width: 480px) {
+  .memories-album-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+
+  .memories-album-grid > * {
+    grid-column: span 1 !important;
+    height: 220px !important;
+  }
+}
+
+/* ── FIX 7: CaregiverDashboard inline 1fr 1fr grids ── */
+@media (max-width: 480px) {
+  .cg-inline-2col {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ── FIX 8: Suggest grid tablet (481–768px) — 2 columns instead of 3 ── */
+@media (min-width: 481px) and (max-width: 768px) {
+  .suggest-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 16px !important;
+  }
+}
+
+/* ── FIX 9: ActivityHub featured card — stack on mobile ── */
+@media (max-width: 480px) {
+  .activity-featured-card {
+    flex-direction: column !important;
+  }
+
+  .activity-featured-img-col {
+    min-width: unset !important;
+    width: 100% !important;
+    height: 200px !important;
+  }
+
+  .activity-featured-content-col {
+    min-width: unset !important;
+    width: 100% !important;
+    padding: 20px !important;
+  }
+
+  .activity-rec-banner {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    text-align: center !important;
   }
 }

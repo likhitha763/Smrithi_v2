@@ -345,7 +345,7 @@ export default function CaregiverDashboard() {
             </h2>
 
             {/* Patient Physical Details */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', margin: '16px 0' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', margin: '16px 0' }} className="cg-inline-2col">
               <div style={{ backgroundColor: '#f4f8f4', padding: '14px', borderRadius: '14px', textAlign: 'center' }}>
                 <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 600 }}>HEIGHT</div>
                 <div style={{ fontSize: '1.4rem', fontWeight: 800, color: 'var(--text-main)' }}>160 <span style={{ fontSize: '0.8rem', fontWeight: 600 }}>cm</span></div>
