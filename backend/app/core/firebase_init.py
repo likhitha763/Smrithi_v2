@@ -30,19 +30,32 @@ db = None
 def _build_env_var_credentials():
     """
     Build a Certificate credential from individual env vars.
-    Used when serviceAccountKey.json is absent (CI / smoke-test environment).
+    Used when serviceAccountKey.json is absent (Render / Cloud production).
     """
-    if not (FIREBASE_PROJECT_ID and FIREBASE_CLIENT_EMAIL and FIREBASE_PRIVATE_KEY):
+    pk = os.getenv("FIREBASE_PRIVATE_KEY") or FIREBASE_PRIVATE_KEY
+    proj_id = os.getenv("FIREBASE_PROJECT_ID") or FIREBASE_PROJECT_ID
+    client_email = os.getenv("FIREBASE_CLIENT_EMAIL") or FIREBASE_CLIENT_EMAIL
+
+    if not (proj_id and client_email and pk):
         return None
-    cert_dict = {
-        "type": "service_account",
-        "project_id": FIREBASE_PROJECT_ID,
-        "private_key_id": "env_var_key",
-        "private_key": FIREBASE_PRIVATE_KEY,
-        "client_email": FIREBASE_CLIENT_EMAIL,
-        "token_uri": "https://oauth2.googleapis.com/token",
-    }
-    return credentials.Certificate(cert_dict)
+
+    # Replace escaped \n (backslash + n) with actual newlines and strip surrounding quotes
+    formatted_pk = pk.strip('"\'').replace("\\n", "\n")
+
+    try:
+        cert_dict = {
+            "type": "service_account",
+            "project_id": proj_id,
+            "private_key_id": "env_var_key",
+            "private_key": formatted_pk,
+            "client_email": client_email,
+            "token_uri": "https://oauth2.googleapis.com/token",
+        }
+        return credentials.Certificate(cert_dict)
+    except Exception as err:
+        logger.error(f"Failed to build Certificate credential from env vars: {err}")
+        return None
+
 
 
 def init_firebase():
