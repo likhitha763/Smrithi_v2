@@ -27,6 +27,36 @@ logger = logging.getLogger("uvicorn")
 db = None
 
 
+def clean_pem_key(key: str) -> str:
+    """
+    Robustly formats and cleans a PEM RSA private key string from environment variables.
+    Handles literal '\\n', quotes, trailing whitespace, and line breaks.
+    """
+    if not key:
+        return ""
+    
+    # Strip quotes & whitespace
+    k = key.strip().strip('"\'').strip()
+    
+    # Unescape escaped backslash-n sequences from env vars
+    k = k.replace("\\n", "\n").replace("\\r", "").replace("\r", "")
+    
+    # Ensure standard PEM header & footer format
+    if "-----BEGIN PRIVATE KEY-----" in k and "-----END PRIVATE KEY-----" in k:
+        try:
+            parts = k.split("-----BEGIN PRIVATE KEY-----")
+            after_header = parts[-1]
+            body_and_footer = after_header.split("-----END PRIVATE KEY-----")
+            body = body_and_footer[0].strip()
+            # Clean body of any extra spaces or broken lines
+            clean_body = "\n".join([line.strip() for line in body.splitlines() if line.strip()])
+            return f"-----BEGIN PRIVATE KEY-----\n{clean_body}\n-----END PRIVATE KEY-----\n"
+        except Exception:
+            pass
+
+    return k
+
+
 def _build_env_var_credentials():
     """
     Build a Certificate credential from individual env vars.
@@ -39,8 +69,7 @@ def _build_env_var_credentials():
     if not (proj_id and client_email and pk):
         return None
 
-    # Replace escaped \n (backslash + n) with actual newlines and strip surrounding quotes
-    formatted_pk = pk.strip('"\'').replace("\\n", "\n")
+    formatted_pk = clean_pem_key(pk)
 
     try:
         cert_dict = {
@@ -53,9 +82,8 @@ def _build_env_var_credentials():
         }
         return credentials.Certificate(cert_dict)
     except Exception as err:
-        logger.error(f"Failed to build Certificate credential from env vars: {err}")
+        logger.error(f"Failed to initialize Certificate credential from env vars: {err}")
         return None
-
 
 
 def init_firebase():
@@ -81,25 +109,27 @@ def init_firebase():
 
     # 2. Fallback: build credential from env vars
     if cred is None:
-        cred = _build_env_var_credentials()
-        if cred:
-            logger.info("Firebase Admin SDK: using credentials from environment variables.")
-        else:
-            logger.warning(
-                "No valid Firebase credentials found. "
-                "Set FIREBASE_CRED_PATH or FIREBASE_PROJECT_ID + FIREBASE_CLIENT_EMAIL + FIREBASE_PRIVATE_KEY."
-            )
+        try:
+            cred = _build_env_var_credentials()
+            if cred:
+                logger.info("Firebase Admin SDK: using credentials from environment variables.")
+            else:
+                logger.warning("No valid Firebase credentials found in environment variables.")
+        except Exception as e:
+            logger.warning(f"Error reading credentials from env vars: {e}")
+            cred = None
 
     try:
         if cred:
             firebase_admin.initialize_app(cred)
         else:
-            firebase_admin.initialize_app()  # ADC last resort
+            logger.warning("Initializing default Firebase app without credentials (offline mode).")
     except Exception as init_err:
         logger.error(f"Firebase app initialization failed: {init_err}")
 
     try:
-        db = firestore.client()
+        if cred:
+            db = firestore.client()
     except Exception as e:
         logger.warning(f"Firestore client initialization failed: {e}")
         db = None
