@@ -1,6 +1,14 @@
 {
   "rewrites": [
     {
+      "source": "/api/:path*",
+      "destination": "https://smrithi-v2.onrender.com/api/:path*"
+    },
+    {
+      "source": "/voice/:path*",
+      "destination": "https://smrithi-v2.onrender.com/voice/:path*"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }
