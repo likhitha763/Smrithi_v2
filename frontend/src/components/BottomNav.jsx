@@ -11,7 +11,7 @@ export default function BottomNav() {
   const location = useLocation();
 
   const navItems = [
-    { label: 'Home',       path: '/',         icon: Home     },
+    { label: 'Home',       path: '/home',     icon: Home     },
     { label: 'Games',      path: '/games',    icon: Gamepad2 },
     { label: 'Memories',   path: '/memories', icon: Image    },
     { label: 'Daily Care', path: '/schedule', icon: Calendar },
