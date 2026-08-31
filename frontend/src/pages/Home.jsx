@@ -76,7 +76,7 @@ export default function Home() {
       </div>
 
       {/* Top Widgets Row (Journey Widget & Reminder Widget) */}
-      <div style={styles.widgetRow}>
+      <div style={styles.widgetRow} className="home-widget-row">
         {/* Journey Widget */}
         <div style={styles.widgetCard}>
           <div style={styles.widgetLeft}>
@@ -143,7 +143,7 @@ export default function Home() {
       </div>
 
       {/* Main Big Callout Cards */}
-      <div style={styles.calloutGrid}>
+      <div style={styles.calloutGrid} className="home-callout-grid">
         <div style={{ ...styles.calloutCard, ...styles.calloutDark }} onClick={() => navigate('/games')}>
           <div style={styles.calloutIconCircle}>
             <Gamepad2 size={30} color="var(--primary-green)" />
@@ -160,7 +160,7 @@ export default function Home() {
       </div>
 
       {/* Grid: My Memories & Today's Care */}
-      <div style={styles.twoColumnGrid}>
+      <div style={styles.twoColumnGrid} className="home-two-col-grid">
         {/* Left Side: Memories Preview */}
         <div style={styles.cardContainer}>
           <div style={styles.cardHeaderRow}>
@@ -170,7 +170,7 @@ export default function Home() {
             </button>
           </div>
           
-          <div style={styles.memoriesCarousel}>
+          <div style={styles.memoriesCarousel} className="home-memories-carousel">
             {memoriesList.map(mem => (
               <div key={mem.id} style={styles.memoryThumbCard} onClick={() => setActiveLightbox(mem)}>
                 <img src={mem.url} alt={mem.title} style={styles.memoryThumbImg} />
@@ -221,9 +221,10 @@ export default function Home() {
       {/* SMRITHI Suggests Bottom Cards */}
       <div>
         <h2 style={{ ...styles.sectionHeader, marginBottom: '18px' }}>SMRITHI Suggests</h2>
-        <div style={styles.suggestGrid}>
+        <div style={styles.suggestGrid} className="suggest-grid">
           <div
             style={styles.suggestCard}
+            className="suggest-card"
             onClick={() => handleSuggestionAction('music')}
             onKeyDown={(event) => {
               if (event.key === 'Enter' || event.key === ' ') {
@@ -244,6 +245,7 @@ export default function Home() {
 
           <div
             style={styles.suggestCard}
+            className="suggest-card"
             onClick={() => handleSuggestionAction('garden')}
             onKeyDown={(event) => {
               if (event.key === 'Enter' || event.key === ' ') {
@@ -264,6 +266,7 @@ export default function Home() {
 
           <div
             style={styles.suggestCard}
+            className="suggest-card"
             onClick={() => handleSuggestionAction('breathing')}
             onKeyDown={(event) => {
               if (event.key === 'Enter' || event.key === ' ') {

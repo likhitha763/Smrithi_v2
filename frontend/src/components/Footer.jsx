@@ -1,9 +1,9 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 export default function Footer() {
   return (
-    <footer style={styles.footer} role="contentinfo" aria-label="Page Footer">
+    <footer style={styles.footer} className="app-footer" role="contentinfo" aria-label="Page Footer">
       <div style={styles.container}>
         {/* Left Side: Brand Logo and Copyright */}
         <div style={styles.leftCol}>
@@ -13,12 +13,32 @@ export default function Footer() {
           </span>
         </div>
 
-        {/* Right Side: Links */}
-        <nav style={styles.navLinks} aria-label="Footer Links">
-          <Link to="/" style={styles.link}>Home</Link>
-          <Link to="/schedule" style={styles.linkActive}>Schedule</Link>
-          <Link to="/games" style={styles.link}>Games</Link>
-          <Link to="/caregiver" style={styles.link}>Caregiver Access</Link>
+        {/* Right Side: Links — hidden on mobile (bottom nav handles navigation) */}
+        <nav style={styles.navLinks} className="footer-nav-links" aria-label="Footer Links">
+          <NavLink 
+            to="/home" 
+            style={({ isActive }) => ({ ...styles.link, ...(isActive ? styles.linkActive : {}) })}
+          >
+            Home
+          </NavLink>
+          <NavLink 
+            to="/schedule" 
+            style={({ isActive }) => ({ ...styles.link, ...(isActive ? styles.linkActive : {}) })}
+          >
+            Schedule
+          </NavLink>
+          <NavLink 
+            to="/games" 
+            style={({ isActive }) => ({ ...styles.link, ...(isActive ? styles.linkActive : {}) })}
+          >
+            Games
+          </NavLink>
+          <NavLink 
+            to="/caregiver" 
+            style={({ isActive }) => ({ ...styles.link, ...(isActive ? styles.linkActive : {}) })}
+          >
+            Caregiver Access
+          </NavLink>
         </nav>
       </div>
     </footer>
@@ -27,10 +47,10 @@ export default function Footer() {
 
 const styles = {
   footer: {
-    backgroundColor: '#eaf5ea',
+    backgroundColor: 'rgba(91, 140, 122, 0.12)',
     borderTop: '1px solid #d2ebd4',
     padding: '32px 48px',
-    marginTop: '64px',
+    marginTop: '32px',
     width: '100%',
   },
   container: {

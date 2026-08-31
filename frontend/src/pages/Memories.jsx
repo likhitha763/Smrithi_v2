@@ -108,7 +108,7 @@ export default function Memories() {
       </div>
 
       {/* Album grid */}
-      <div style={styles.grid}>
+      <div style={styles.grid} className="memories-album-grid">
         {albums.map((album, idx) => {
           const Icon = album.icon;
           // Album 1 is featured larger as shown in the layout mockup Image 4

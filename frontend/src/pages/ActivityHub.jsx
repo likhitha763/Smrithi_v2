@@ -44,7 +44,7 @@ export default function ActivityHub() {
       </div>
 
       {/* Recommendation Banner */}
-      <div style={styles.recommendationBanner}>
+      <div style={styles.recommendationBanner} className="activity-rec-banner">
         <div style={styles.recLeft}>
           <div style={styles.recIconCircle}>
             <Heart size={20} color="var(--primary-green)" fill="var(--primary-green)" />
@@ -65,8 +65,8 @@ export default function ActivityHub() {
       </div>
 
       {/* Featured Card */}
-      <div style={styles.featuredCard}>
-        <div style={styles.featuredImageCol}>
+      <div style={styles.featuredCard} className="activity-featured-card">
+        <div style={styles.featuredImageCol} className="activity-featured-img-col">
           <img 
             src="https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&q=80&w=800" 
             alt="Happy family sitting together" 
@@ -74,7 +74,7 @@ export default function ActivityHub() {
           />
         </div>
         
-        <div style={styles.featuredContentCol}>
+        <div style={styles.featuredContentCol} className="activity-featured-content-col">
           <div style={styles.featuredBadge}>
             <Sparkles size={16} color="var(--primary-green)" style={{ marginRight: '6px' }} />
             Featured
@@ -96,7 +96,7 @@ export default function ActivityHub() {
       <h2 style={styles.sectionHeader}>More Activities</h2>
 
       {/* 2x2 Grid */}
-      <div style={styles.grid}>
+      <div style={styles.grid} className="activity-hub-grid">
         {activities.map((act) => {
           const Icon = act.icon;
           return (
@@ -196,7 +196,7 @@ const styles = {
     alignItems: 'center',
     gap: '16px',
     flex: 1,
-    minWidth: '280px',
+    minWidth: 0,
   },
   recIconCircle: {
     width: '44px',
@@ -240,7 +240,7 @@ const styles = {
   },
   featuredImageCol: {
     flex: 1,
-    minWidth: '320px',
+    minWidth: '280px',
     height: '300px',
   },
   featuredImg: {
@@ -256,7 +256,7 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'flex-start',
     gap: '16px',
-    minWidth: '320px',
+    minWidth: '280px',
   },
   featuredBadge: {
     display: 'inline-flex',
